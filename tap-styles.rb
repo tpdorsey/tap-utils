@@ -61,6 +61,7 @@ puts ""
 belgians = 0
 ipas = 0
 stouts = 0
+wheats = 0
 
 sorted_styles.each do |style|
   if style[0].include?("Belgian")
@@ -74,10 +75,15 @@ sorted_styles.each do |style|
   if style[0].include?("Stout") || style[0].include?("Porter")
     stouts += style[1]
   end
+
+  if style[0].include?("Wit") || style[0].include?("Wheat")
+    wheats += style[1]
+  end
 end
 
 puts "Belgians".rjust(width) + "  " + ('|' * belgians)
 puts "India Pale Ales".rjust(width) + "  " + ('|' * ipas)
 puts "Stouts and Porters".rjust(width) + "  " + ('|' * stouts)
+puts "Wheat and Wit".rjust(width) + "  " + ('|' * wheats)
 
 puts ""
