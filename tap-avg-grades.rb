@@ -95,12 +95,12 @@ width = longest_style[0].length
 
 puts ""
 
-puts "Style".rjust(width) + "  Avg Grade"
+puts "Style".rjust(width) + "  Avg Grade  Rated Beers"
 sorted_styles.each do |style|
   avg_grade = style_grades[style[0]] / style[1]
   letter_grade = gradeLookup(avg_grade)
 
-  puts style[0].rjust(width) + "  " + letter_grade.ljust(3) + " (" + avg_grade.round(3).to_s + ")"
+  puts style[0].rjust(width) + "  " + letter_grade.ljust(11) + style[1].to_s
 end
 
 puts ""
