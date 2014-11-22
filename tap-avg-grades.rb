@@ -99,7 +99,7 @@ width = longest_style.length
 puts ""
 puts "Style".rjust(width) + "  Avg Grade  Rated  Std Deviation"
 
-
+# For each style, pull grades from records with that style
 uniqueBeerStyles.each do |style|
   file_hash["tapcellarbeers"].each do |beer_record|
     grade = beer_record["grade"].to_f.round(3)
@@ -112,15 +112,18 @@ uniqueBeerStyles.each do |style|
     end
   end
 
+  # Process raw grades to get avg score and letter grade for avg score
   avg_grade = mean(beerGrades)
   letter_grade = gradeLookup(avg_grade)
 
+  # Calculate standard deviation
   if beerGrades.length > 1
     std_dev = standard_deviation(beerGrades).round(3)
   else
     std_dev = ""
   end
 
+  # Print line for style
   puts style.rjust(width) + "  " + letter_grade.ljust(11) + beerGrades.length.to_s.ljust(7) + std_dev.to_s
 
   beerGrades.clear
