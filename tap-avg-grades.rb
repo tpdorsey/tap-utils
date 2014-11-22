@@ -34,6 +34,25 @@ def gradeLookup(grade)
   end
 end
 
+# Math stuff for standard deviation
+def sum(a)
+  a.inject(0){ |accum, i| accum + i }
+end
+
+def mean(a)
+  sum(a) / a.length.to_f
+end
+
+def sample_variance(a)
+  m = mean(a)
+  sum1 = a.inject(0){ |accum, i| accum + (i - m) ** 2 }
+  sum1 / (a.length - 1).to_f
+end
+
+def standard_deviation(a)
+  Math.sqrt(sample_variance(a))
+end
+
 # First argument is the file to read
 # At this time we assume JSON
 file_to_read = ARGV[0]
@@ -45,14 +64,15 @@ file_hash = JSON.parse(file_read, :max_nesting => 100)
 
 # Keep a list of style encountered as we read through records
 beerStyles = Array.new
+
+# We'll keep data for each grade in this array
 beerGrades = Array.new
 
 # Read through each record in the JSON and do stuff
 file_hash["tapcellarbeers"].each do |beer_record|
-  grade = beer_record["grade"].to_f.round(3)
 
   # Only process records with valid grades
-  if grade > 0
+  if beer_record["grade"].to_f > 0
 
     # Stash that style away
     if beer_record["bdb_style"].to_s != ""
@@ -64,43 +84,46 @@ file_hash["tapcellarbeers"].each do |beer_record|
     end
 
     beerStyles << beer_style
-    beerGrades << [beer_style, grade]
   end
 end
 
-# Hash to hold counts for styles
-style_counts = Hash.new 0
+# Filter just unique beer styles and sort
+uniqueBeerStyles = beerStyles.uniq
+uniqueBeerStyles.sort!
 
-# Counts for each unique style
-beerStyles.each do |style|
-  style_counts[style] += 1
-end
+# Get the longest style name and save that for formatting later
+longest_style = uniqueBeerStyles.max_by { |x| x.length }
+width = longest_style.length
 
-# Hash to hold counts for grades
-style_grades = Hash.new 0
-
-# Counts for each unique style
-beerGrades.each do |grade|
-  style_grades[grade[0]] += grade[1]
-end
-
-sorted_styles = style_counts.sort_by { |style, count| style }
-
-longest_style = sorted_styles.max_by { |x| x[0].length }
-width = longest_style[0].length
-
-# sorted_styles.each do |style|
-#   puts style[0] + ", " + style[1].to_s
-# end
-
+# Print header
 puts ""
+puts "Style".rjust(width) + "  Avg Grade  Rated  Std Deviation"
 
-puts "Style".rjust(width) + "  Avg Grade  Rated Beers"
-sorted_styles.each do |style|
-  avg_grade = style_grades[style[0]] / style[1]
+
+uniqueBeerStyles.each do |style|
+  file_hash["tapcellarbeers"].each do |beer_record|
+    grade = beer_record["grade"].to_f.round(3)
+
+    # Only process records with valid grades
+    if grade > 0
+      if beer_record["bdb_style"].to_s == style or beer_record["style"].to_s == style
+        beerGrades << grade
+      end
+    end
+  end
+
+  avg_grade = mean(beerGrades)
   letter_grade = gradeLookup(avg_grade)
 
-  puts style[0].rjust(width) + "  " + letter_grade.ljust(11) + style[1].to_s
+  if beerGrades.length > 1
+    std_dev = standard_deviation(beerGrades).round(3)
+  else
+    std_dev = ""
+  end
+
+  puts style.rjust(width) + "  " + letter_grade.ljust(11) + beerGrades.length.to_s.ljust(7) + std_dev.to_s
+
+  beerGrades.clear
 end
 
 puts ""
