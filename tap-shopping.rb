@@ -40,6 +40,8 @@ puts ""
 
 beer_wishlist.each do |beer|
   puts beer[0].to_s + " (" + beer[1].to_s + ")"
+  puts (" " * 4) + beer[2]
+  puts ""
 end
 
 puts ""
