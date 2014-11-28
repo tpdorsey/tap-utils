@@ -41,6 +41,7 @@ Pass in the path and filename of a valid TapCellarBackup.json file as the last a
 Takes the following options:
 
 | Option | Description |
+| ------ | ----------- |
 | -n, --name     |  Sort results by name |
 | -b, --brewery  |  Sort results by brewery |
 | -s, --style    |  Sort results by style |
