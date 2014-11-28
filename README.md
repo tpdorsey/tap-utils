@@ -32,9 +32,9 @@ Pass in the path and filename of a valid TapCellarBackup.json file.
 
 ## tap-shopping.rb
 
-A command line version of the Shopping List filter.
+TapCeller has a nice Shopping List saved filter. This utility just lets you output the Shopping List from your backup for, say, printing. If that's how you roll.
 
-Pass in the path and filename of a valid TapCellarBackup.json file as the last argument.
+Pass in the path and filename of a valid TapCellarBackup.json file as the last argument. Options are optional.
 
 ```ruby tap-shopping.rb [options] [filename]```
 
