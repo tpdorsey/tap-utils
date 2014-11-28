@@ -43,15 +43,13 @@ Takes the following options:
 | Option | Description |
 | ------ | ----------- |
 | -n, --name     |  Sort results by name |
-| -b, --brewery  |  Sort results by brewery |
+| -b, --brewery  |  Sort results by brewery (default) |
 | -s, --style    |  Sort results by style |
 | -h, --help     |  Display this screen |
 
 For example, the following returns sorts the list by brewery.
 
 ```ruby tap-shopping.rb -b TapCellarBackup.json```
-
-Currently the output is sorted by beer name.
 
 ## tap-styles.rb
 
