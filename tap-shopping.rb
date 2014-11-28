@@ -21,7 +21,7 @@ OptionParser.new do |opts|
   end
 
   opts.on("-b", "--brewery", "Sort results by brewery") do
-    options[:sort] = 1
+    options[:sort] = 3
   end
 
   opts.on("-s", "--style", "Sort results by style") do
@@ -60,7 +60,14 @@ file_hash["tapcellarbeers"].each do |beer_record|
     else
       beer_style = ""
     end
-    beer_wishlist << [beer_record["beername"], beer_record["breweryname"], beer_style]
+
+    if beer_record["breweryname"].start_with?("The ")
+      brewery_sort_name = beer_record["breweryname"].slice(4..-1)
+    else
+      brewery_sort_name = beer_record["breweryname"]
+    end
+
+    beer_wishlist << [beer_record["beername"], beer_record["breweryname"], beer_style, brewery_sort_name]
   end
 
 end
