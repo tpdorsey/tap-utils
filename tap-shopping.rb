@@ -1,14 +1,48 @@
-# tap-timeline.rb - returns a timeline of grades for a given style
+# tap-shopping.rb - returns a shopping list from your TapCellar backup
 
 require 'json'
+require 'optparse'
 
-# First argument is the file to read
-file_to_read = ARGV[0]
+ARGV << '-h' if ARGV.empty?
 
-# To Do: filter by style?
+options = {}
+OptionParser.new do |opts|
+  options[:banner] = "Usage: example.rb [options] [file to parse]"
+  options[:filter] = ""
+  options[:filename] = ""
+  options[:sort] = 0
+
+  # opts.on("-f", "--filter STRING", String, "Filter results by [STRING]") do |filter_string|
+  #   options[:filter] = filter_string
+  # end
+
+  opts.on("-n", "--name", "Sort results by name") do
+    options[:sort] = 0
+  end
+
+  opts.on("-b", "--brewery", "Sort results by brewery") do
+    options[:sort] = 1
+  end
+
+  opts.on("-s", "--style", "Sort results by style") do
+    options[:sort] = 2
+  end
+
+  opts.on( '-h', '--help', 'Display this screen' ) do
+    puts opts
+    exit
+  end
+end.parse!
+
+options[:filename] = ARGV[ARGV.length - 1]
 
 # Read and hash JSON
-file_hash = JSON.parse(File.open(file_to_read, 'r').read, :max_nesting => 100)
+if File.exists?(options[:filename])
+  file_hash = JSON.parse(File.open(options[:filename], 'r').read, :max_nesting => 100)
+else
+  puts "Error: File " + options[:filename] + " does not exist."
+  exit
+end
 
 # Array for shopping list
 beer_wishlist = Array.new
@@ -32,10 +66,10 @@ file_hash["tapcellarbeers"].each do |beer_record|
 end
 
 # Sort list - could be expanded to sort by brewery or style
-beer_wishlist.sort! { |a, b| a[0] <=> b[0] }
+beer_wishlist.sort! { |a, b| a[options[:sort]] <=> b[options[:sort]] }
 
 puts ""
-puts "TapCellar Shopping List"
+puts "# TapCellar Shopping List #"
 puts ""
 
 beer_wishlist.each do |beer|
@@ -45,3 +79,5 @@ beer_wishlist.each do |beer|
 end
 
 puts ""
+
+

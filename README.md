@@ -34,9 +34,21 @@ Pass in the path and filename of a valid TapCellarBackup.json file.
 
 A command line version of the Shopping List filter.
 
-Pass in the path and filename of a valid TapCellarBackup.json file.
+Pass in the path and filename of a valid TapCellarBackup.json file as the last argument.
 
-```ruby tap-shopping.rb TapCellarBackup.json```
+```ruby tap-shopping.rb [options] [filename]```
+
+Takes the following options:
+
+| Option | Description |
+| -n, --name     |  Sort results by name |
+| -b, --brewery  |  Sort results by brewery |
+| -s, --style    |  Sort results by style |
+| -h, --help     |  Display this screen |
+
+For example, the following returns sorts the list by brewery.
+
+```ruby tap-shopping.rb -b TapCellarBackup.json```
 
 Currently the output is sorted by beer name.
 
