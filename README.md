@@ -42,10 +42,11 @@ Takes the following options:
 
 | Option | Description |
 | ------ | ----------- |
-| -n, --name     |  Sort results by name |
-| -b, --brewery  |  Sort results by brewery (default) |
-| -s, --style    |  Sort results by style |
-| -h, --help     |  Display this screen |
+| -f, --filter STRING  | Filter results of sort category by [STRING] |
+| -n, --name           |  Sort results by name |
+| -b, --brewery        |  Sort results by brewery (default) |
+| -s, --style          |  Sort results by style |
+| -h, --help           |  Display this screen |
 
 For example, the following returns sorts the list by brewery.
 

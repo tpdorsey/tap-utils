@@ -7,28 +7,33 @@ ARGV << '-h' if ARGV.empty?
 
 options = {}
 OptionParser.new do |opts|
-  options[:banner] = "Usage: example.rb [options] [file to parse]"
-  options[:filter] = ""
+  opts.banner = "Usage: tap-shopping.rb [options] [file to parse]"
+  options[:filter] = false
+  options[:filter_on] = "beername"
   options[:filename] = ""
   options[:sort] = 0
 
-  # opts.on("-f", "--filter STRING", String, "Filter results by [STRING]") do |filter_string|
-  #   options[:filter] = filter_string
-  # end
+  opts.on("-f", "--filter STRING", String, "Filter results of sort category by [STRING]") do |filter_string|
+    options[:filter] = true
+    options[:filter_string] = filter_string
+  end
 
   opts.on("-n", "--name", "Sort results by name") do
     options[:sort] = 0
+    options[:filter_on] = "beername"
   end
 
   opts.on("-b", "--brewery", "Sort results by brewery") do
     options[:sort] = 3
+    options[:filter_on] = "breweryname"
   end
 
   opts.on("-s", "--style", "Sort results by style") do
     options[:sort] = 2
+    options[:filter_on] = "style"
   end
 
-  opts.on( '-h', '--help', 'Display this screen' ) do
+  opts.on( '-h', '--help', 'Display help for options' ) do
     puts opts
     exit
   end
@@ -49,6 +54,8 @@ beer_wishlist = Array.new
 
 # Read through each record in the JSON and do stuff
 file_hash["tapcellarbeers"].each do |beer_record|
+
+  next if options[:filter] && !beer_record[options[:filter_on]].to_s.downcase.include?(options[:filter_string].downcase)
 
   if beer_record["shoppingcart"].to_i > 0
 
