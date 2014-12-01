@@ -1,8 +1,24 @@
 # Tap Utils
 
-Tiny utilities to extract information from your TapCellar backup.
+Tiny utilities to extract information from your [TapCellar](http://tapcellar.com/) backup.
 
-Currently these utils need a valid JSON file as input. Argument and error handling is a bit crude at the moment.
+Currently these utils need a valid TapCellarBackup.json data file as input, which you can extract from a TapCellar Backup.tap file. Argument and error handling is a bit crude at the moment.
+
+## Extracting TapCellarBackup.json
+
+It's easy to create a backup of your TapCellar data. Swipe from the left, then select "Preferences" and "Backup Your Database".
+
+There are several options for backing up your data. The backup can be quite large &mdash; mine are over 30 MB &mdash; so choose a location that can accommodate a large file. I've used both Dropbox and AirDrop with success.
+
+You'll end up with a backup.tap file. As described in the TapCellar help:
+
+> TapCellar backups are zip files with the extension “.tap”. If you want to look inside one, just change the extension to “.zip” and have a look. Just be warned that messing with a backup may mean you can’t restore it later.
+
+While you're changing the extension, I suggest changing the name of the file so you don't accidentally overwrite it with a future backup. Adding a date is a decent idea:
+
+```mv backup.tap backup_2014-11-30.zip```
+
+Now you can open the zip archive. The following utilities read their data from the TapCellarBackup.json file. Note the path to this file and pass it as the last argument when you run these Ruby scripts.
 
 ## tap-avg-grades.rb
 
@@ -12,6 +28,8 @@ Returns a table of styles for all graded beers, including:
 * average grade for the style
 * number of beers rated for the style
 * standard deviation of grades
+
+The output looks something like this:
 
 ```
                        Style  Avg Grade  Rated  Std Deviation
@@ -34,6 +52,27 @@ Pass in the path and filename of a valid TapCellarBackup.json file.
 
 TapCeller has a nice Shopping List saved filter. This utility just lets you output the Shopping List from your backup for, say, printing. If that's how you roll.
 
+The output looks something like this:
+
+```
+# TapCellar Shopping List #
+
+Chasin' Freshies [American-Style India Pale Ale]
+Deschutes Brewery
+
+Sensi Harvest [Fresh "Wet" Hop Ale]
+Sixpoint Brewery
+
+Hi-Res [Imperial or Double India Pale Ale]
+Sixpoint Brewery
+
+Heady Topper [Imperial or Double India Pale Ale]
+The Alchemist
+
+War Elephant [Imperial or Double India Pale Ale]
+Rushing Duck Brewing Company
+```
+
 Pass in the path and filename of a valid TapCellarBackup.json file as the last argument. Options are optional.
 
 ```ruby tap-shopping.rb [options] [filename]```
@@ -48,9 +87,14 @@ Takes the following options:
 | -s, --style          |  Sort results by style |
 | -h, --help           |  Display this screen |
 
-For example, the following returns sorts the list by brewery.
+For example, the following returns a shopping list sorted by brewery.
 
 ```ruby tap-shopping.rb -b TapCellarBackup.json```
+
+This returns a shopping list sorted by style and only styles that contain the string "ale".
+
+```ruby tap-shopping.rb -s -f ale TapCellarBackup.json```
+
 
 ## tap-styles.rb
 
