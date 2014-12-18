@@ -1,36 +1,39 @@
 require 'json'
+require 'optparse'
+
+ARGV << '-h' if ARGV.empty?
 
 # Lookup table for float grade to letter grade
 # Involves some guesswork but I think it's pretty close
 def gradeLookup(grade)
   if grade <= 0
-    return "Not graded"
+    return ["Not graded", 0]
   elsif grade >= 3.8
-    return "A+"
+    return ["A+", 13]
   elsif grade >= 3.47
-    return "A"
+    return ["A",  12]
   elsif grade >= 3.14
-    return "A-"
+    return ["A-", 11]
   elsif grade >= 2.81
-    return "B+"
+    return ["B+", 10]
   elsif grade >= 2.48
-    return "B"
+    return ["B",  9]
   elsif grade >= 2.15
-    return "B-"
+    return ["B-", 8]
   elsif grade >= 1.82
-    return "C+"
+    return ["C+", 7]
   elsif grade >= 1.49
-    return "C"
+    return ["C",  6]
   elsif grade >= 1.16
-    return "C-"
+    return ["C-", 5]
   elsif grade >= 0.83
-    return "D+"
+    return ["D+", 4]
   elsif grade >= 0.50
-    return "D"
+    return ["D",  3]
   elsif grade >= 0.17
-    return "D-"
+    return ["D-", 2]
   else
-    return "F"
+    return ["F",  1]
   end
 end
 
@@ -53,14 +56,30 @@ def standard_deviation(a)
   Math.sqrt(sample_variance(a))
 end
 
-# First argument is the file to read
-# At this time we assume JSON
-file_to_read = ARGV[0]
+options = {}
+OptionParser.new do |opts|
+  opts.banner = "Returns a table of average grades for each style in a TapCellar backup.\nUsage: tap-avg-grades.rb [options] [file to parse]"
+  options[:csv] = false
+  options[:filename] = ""
 
-# Read and hash JSON
-file_raw = File.open(file_to_read, 'r')
-file_read = file_raw.read
-file_hash = JSON.parse(file_read, :max_nesting => 100)
+  opts.on("-c", "--csv", "Output CSV") do
+    options[:csv] = true
+  end
+
+  opts.on('-h', '--help', 'Display help for options' ) do
+    puts opts
+    exit
+  end
+end.parse!
+
+options[:filename] = ARGV[ARGV.length - 1]
+
+if File.exists?(options[:filename])
+  file_hash = JSON.parse(File.open(options[:filename], 'r').read, :max_nesting => 100)
+else
+  puts "Error: File " + options[:filename] + " does not exist."
+  exit
+end
 
 # Keep a list of style encountered as we read through records
 beerStyles = Array.new
@@ -96,8 +115,13 @@ longest_style = uniqueBeerStyles.max_by { |x| x.length }
 width = longest_style.length
 
 # Print header
-puts ""
-puts "Style".rjust(width) + "  Avg Grade  Rated  Std Deviation"
+
+if options[:csv]
+  puts "Style,Avg Grade,Grade Value,Rated Beers,Std Deviation"
+else
+  puts ""
+  puts "Style".rjust(width) + "  Avg Grade  Rated  Std Deviation"
+end
 
 # For each style, pull grades from records with that style
 uniqueBeerStyles.each do |style|
@@ -124,9 +148,11 @@ uniqueBeerStyles.each do |style|
   end
 
   # Print line for style
-  puts style.rjust(width) + "  " + letter_grade.ljust(11) + beerGrades.length.to_s.ljust(7) + std_dev.to_s
+  if options[:csv]
+    puts style + "," + letter_grade[0] + "," + letter_grade[1].to_s + "," + beerGrades.length.to_s + "," + std_dev.to_s
+  else
+    puts style.rjust(width) + "  " + letter_grade.ljust(11) + beerGrades.length.to_s.ljust(7) + std_dev.to_s
+  end
 
   beerGrades.clear
 end
-
-puts ""
