@@ -100,6 +100,10 @@ This returns a shopping list sorted by style and only styles that contain the st
 
 Returns a chart illustrating the number of graded beers for all styles with grades, as well as broad style categories such as IPAs, Stouts and so on.
 
+```ruby tap-shopping.rb [options] [filename]```
+
+Optionally pass in the **-c** or **--csv** flag to return style counts in CSV format.
+
 ```
                          Style  Rated Beers
   American-Style Amber/Red Ale  ||||
@@ -124,16 +128,19 @@ Returns a chart illustrating grades over time (oldest to newest) for styles cont
 ```
 Grade timeline for styles containing: Stout
 
-Date        Grade F          A+
-2014-10-12  A               *
-2014-10-12  B            *
-2014-10-12  B+            *
-2014-10-12  A               *
-2014-10-12  B            *
-2014-10-12  C         *
-2014-11-11  B+            *
-2014-11-16  B            *
-2014-11-17  B+            *
+Date        Grade F          A+  Name
+2014-10-12  A               *    Imperial Russian Stout
+2014-10-12  B            *       Sea Monster
+2014-10-12  B+            *      Old Growth
+2014-10-12  A               *    Yin
+2014-10-12  B            *       Old Rasputin
+2014-10-12  C         *          Overcast Espresso Stout
+2014-11-11  B+            *      Milk Stout Nitro
+2014-11-16  B            *       35K
+2014-11-17  B+            *      Dragon's Milk
+2014-11-25  A+               *   Aún Más Café Jesús
+2014-12-05  A+               *   Bourbon County Brand Stout
+2014-12-10  A               *    Ten Fidy
 ```
 
 Pass in a string to match against style names as the first argument and the path and filename of a valid TapCellarBackup.json file as the second argument.
@@ -145,3 +152,19 @@ For example, the following returns all IPAs, including double and imperial varia
 ```ruby tap-timeline.rb "india pale ale" TapCellarBackup.json```
 
 If the style name or file name contains spaces or characters that require escaping, use quotes around the string. Which is a good idea in any case.
+
+## Changelog
+
+### 12/18/2014
+
+tap-avg-grades.rb
+"fixed letter grade conversion"
+
+tap-styles.rb
+"simplify reading json" with error handling
+"added option handling"
+"csv output option"
+
+tap-timeline.rb
+"fixed letter grade conversion"
+"added beer name to output"
