@@ -29,6 +29,10 @@ Returns a table of styles for all graded beers, including:
 * number of beers rated for the style
 * standard deviation of grades
 
+```ruby tap-avg-grades.rb [options] [filename]```
+
+Optionally pass in the **-c** or **--csv** flag to return style counts in CSV format. CSV output includes an integer value between 1 (F) and 13 (A+) for the average grade.
+
 The output looks something like this:
 
 ```
@@ -161,6 +165,7 @@ If the style name or file name contains spaces or characters that require escapi
 
 tap-avg-grades.rb
 "fixed letter grade conversion"
+"csv output option"
 
 tap-styles.rb
 "simplify reading json" with error handling
