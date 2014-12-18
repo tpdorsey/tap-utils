@@ -74,7 +74,7 @@ if options[:csv]
   puts "Style, Rated Beers"
 
   sorted_styles.each do |style|
-    puts style[0] + ", " + style[1].to_s
+    puts style[0] + "," + style[1].to_s
   end
 
   belgians = 0
@@ -106,10 +106,10 @@ if options[:csv]
   end
 
   puts "Belgians, " + belgians.to_s
-  puts "India Pale Ales, " + ipas.to_s
-  puts "Lagers and Pilsners, " + lagers.to_s
-  puts "Stouts and Porters, " + stouts.to_s
-  puts "Wheat and Wit, " + wheats.to_s
+  puts "India Pale Ales," + ipas.to_s
+  puts "Lagers and Pilsners," + lagers.to_s
+  puts "Stouts and Porters," + stouts.to_s
+  puts "Wheat and Wit," + wheats.to_s
 
   exit
 end

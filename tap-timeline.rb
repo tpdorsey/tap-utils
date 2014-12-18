@@ -101,12 +101,23 @@ end
 
 beerGrades.sort! { |a, b| a[0] <=> b[0] }
 
+if options[:csv]
+  puts "Date, Grade, Value, Name, Keyword"
+
+  beerGrades.each do |beer|
+    puts beer[0].strftime("%Y-%m-%d") + "," + beer[1] + "," + beer[2].to_s + "," + beer[3] + "," + options[:keyword]
+  end
+
+  exit
+end
+
+puts ""
 puts "Grade timeline for styles containing: " + options[:keyword].split.map(&:capitalize).join(' ')
 puts ""
 puts "Date".ljust(12) + "Grade F" + "A+".rjust(12) + "  Name"
 beerGrades.each do |beer|
   puts beer[0].strftime("%Y-%m-%d") + "  " + beer[1].ljust(4) + (' ' * beer[2]) + "*" + (' ' * (16 - beer[2])) + beer[3]
 end
-
+puts ""
 
 
