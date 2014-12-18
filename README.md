@@ -125,6 +125,10 @@ Pass in the path and filename of a valid TapCellarBackup.json file.
 
 Returns a chart illustrating grades over time (oldest to newest) for styles containing a specified string.
 
+```ruby tap-shopping.rb [options] [keyword] [filename]```
+
+Optionally pass in the **-c** or **--csv** flag to return data in CSV format.
+
 ```
 Grade timeline for styles containing: Stout
 
@@ -168,3 +172,4 @@ tap-styles.rb
 tap-timeline.rb
 "fixed letter grade conversion"
 "added beer name to output"
+"csv output option"
