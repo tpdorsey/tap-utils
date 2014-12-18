@@ -70,11 +70,49 @@ sorted_styles = style_counts.sort_by { |style, count| style }
 longest_style = sorted_styles.max_by { |x| x[0].length }
 width = longest_style[0].length
 
-# sorted_styles.each do |style|
-#   puts style[0] + ", " + style[1].to_s
-# end
+if options[:csv]
+  puts "Style, Rated Beers"
 
-puts ""
+  sorted_styles.each do |style|
+    puts style[0] + ", " + style[1].to_s
+  end
+
+  belgians = 0
+  ipas = 0
+  lagers = 0
+  stouts = 0
+  wheats = 0
+
+  sorted_styles.each do |style|
+    if style[0].include?("Belgian")
+      belgians += style[1]
+    end
+
+    if style[0].include?("India Pale Ale")
+      ipas += style[1]
+    end
+
+    if style[0].include?("Lager") || style[0].include?("Pilsner")
+      lagers += style[1]
+    end
+
+    if style[0].include?("Stout") || style[0].include?("Porter")
+      stouts += style[1]
+    end
+
+    if style[0].include?("Wit") || style[0].include?("Wheat")
+      wheats += style[1]
+    end
+  end
+
+  puts "Belgians, " + belgians.to_s
+  puts "India Pale Ales, " + ipas.to_s
+  puts "Lagers and Pilsners, " + lagers.to_s
+  puts "Stouts and Porters, " + stouts.to_s
+  puts "Wheat and Wit, " + wheats.to_s
+
+  exit
+end
 
 puts "Style".rjust(width) + "  Rated Beers"
 sorted_styles.each do |style|
@@ -85,6 +123,7 @@ puts ""
 
 belgians = 0
 ipas = 0
+lagers = 0
 stouts = 0
 wheats = 0
 
@@ -95,6 +134,10 @@ sorted_styles.each do |style|
 
   if style[0].include?("India Pale Ale")
     ipas += style[1]
+  end
+
+  if style[0].include?("Lager") || style[0].include?("Pilsner")
+    lagers += style[1]
   end
 
   if style[0].include?("Stout") || style[0].include?("Porter")
@@ -108,6 +151,7 @@ end
 
 puts "Belgians".rjust(width) + "  " + ('|' * belgians)
 puts "India Pale Ales".rjust(width) + "  " + ('|' * ipas)
+puts "Lagers and Pilsners".rjust(width) + "  " + ('|' * lagers)
 puts "Stouts and Porters".rjust(width) + "  " + ('|' * stouts)
 puts "Wheat and Wit".rjust(width) + "  " + ('|' * wheats)
 
