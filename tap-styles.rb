@@ -1,11 +1,38 @@
 require 'json'
+require 'optparse'
 
-# First argument is the file to read
-# At this time we assume JSON
-file_to_read = ARGV[0]
+ARGV << '-h' if ARGV.empty?
 
-# Read and hash JSON
-file_hash = JSON.parse(File.open(file_to_read, 'r').read, :max_nesting => 100)
+options = {}
+OptionParser.new do |opts|
+  opts.banner = "Returns counts of each style in a TapCellar backup.\nUsage: tap-styles.rb [options] [file to parse]"
+  options[:csv] = false
+  options[:filename] = ""
+  # options[:filter] = false
+
+  opts.on("-c", "--csv", "Output CSV") do
+    options[:csv] = true
+  end
+
+  # opts.on("-f", "--filter STRING", String, "Filter results by [STRING]") do |filter_string|
+  #   options[:filter] = true
+  #   options[:filter_string] = filter_string
+  # end
+
+  opts.on('-h', '--help', 'Display help for options' ) do
+    puts opts
+    exit
+  end
+end.parse!
+
+options[:filename] = ARGV[ARGV.length - 1]
+
+if File.exists?(options[:filename])
+  file_hash = JSON.parse(File.open(options[:filename], 'r').read, :max_nesting => 100)
+else
+  puts "Error: File " + options[:filename] + " does not exist."
+  exit
+end
 
 # Keep a list of style encountered as we read through records
 beerStyles = Array.new
