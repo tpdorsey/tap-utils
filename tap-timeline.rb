@@ -26,7 +26,7 @@ def gradeLookup(grade)
     return ["C+", 7]
   elsif grade >= 1.49
     return ["C",  6]
-  elsif grade >= 1.18
+  elsif grade >= 1.16
     return ["C-", 5]
   elsif grade >= 0.83
     return ["D+", 4]
