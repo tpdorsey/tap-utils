@@ -5,9 +5,7 @@ require 'json'
 file_to_read = ARGV[0]
 
 # Read and hash JSON
-file_raw = File.open(file_to_read, 'r')
-file_read = file_raw.read
-file_hash = JSON.parse(file_read, :max_nesting => 100)
+file_hash = JSON.parse(File.open(file_to_read, 'r').read, :max_nesting => 100)
 
 # Keep a list of style encountered as we read through records
 beerStyles = Array.new
