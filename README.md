@@ -125,9 +125,11 @@ Pass in the path and filename of a valid TapCellarBackup.json file.
 
 Returns a chart illustrating grades over time (oldest to newest) for styles containing a specified string.
 
+The script expects the second to last argument is the keyword string and the last argument is the path and filename of a valid TapCellarBackup.json file.
+
 ```ruby tap-shopping.rb [options] [keyword] [filename]```
 
-Optionally pass in the **-c** or **--csv** flag to return data in CSV format.
+Optionally pass in the **-c** or **--csv** flag as an option to return data in CSV format.
 
 ```
 Grade timeline for styles containing: Stout
@@ -146,10 +148,6 @@ Date        Grade F          A+  Name
 2014-12-05  A+               *   Bourbon County Brand Stout
 2014-12-10  A               *    Ten Fidy
 ```
-
-Pass in a string to match against style names as the first argument and the path and filename of a valid TapCellarBackup.json file as the second argument.
-
-```ruby tap-styles.rb [style] [filename]```
 
 For example, the following returns all IPAs, including double and imperial variants.
 
