@@ -4,36 +4,41 @@ require 'optparse'
 ARGV << '-h' if ARGV.empty?
 
 # Lookup table for float grade to letter grade
-# Involves some guesswork but I think it's pretty close
+# Return array includes:
+# - Letter grade
+# - Index
+# - 0 to 5 scale raw
+# - 0 to 5 stars scale rounded to .5
+# - 0 to 100 integer scale
 def gradeLookup(grade)
   if grade <= 0
-    return ["Not graded", 0]
+    return ["Not graded", -1]
   elsif grade >= 3.8
-    return ["A+", 13]
+    return ["A+", 13, 5.00, 5.0, 100]
   elsif grade >= 3.47
-    return ["A",  12]
+    return ["A", 12,  4.58, 4.5, 92]
   elsif grade >= 3.14
-    return ["A-", 11]
+    return ["A-", 11, 4.17, 4.0, 83]
   elsif grade >= 2.81
-    return ["B+", 10]
+    return ["B+", 10, 3.75, 4.0, 75]
   elsif grade >= 2.48
-    return ["B",  9]
+    return ["B", 9, 3.33, 3.5, 67]
   elsif grade >= 2.15
-    return ["B-", 8]
+    return ["B-", 8, 2.92, 3.0, 58]
   elsif grade >= 1.82
-    return ["C+", 7]
+    return ["C+", 7, 2.50, 2.5, 50]
   elsif grade >= 1.49
-    return ["C",  6]
+    return ["C", 6, 2.08, 2.0, 42]
   elsif grade >= 1.16
-    return ["C-", 5]
+    return ["C-", 5, 1.67, 1.5, 33]
   elsif grade >= 0.83
-    return ["D+", 4]
+    return ["D+", 4, 1.25, 1.5, 25]
   elsif grade >= 0.50
-    return ["D",  3]
+    return ["D", 3, 0.83, 1.0, 17]
   elsif grade >= 0.17
-    return ["D-", 2]
+    return ["D-", 2, 0.42, 0.5, 8]
   else
-    return ["F",  1]
+    return ["F", 1, 0.00, 0.0, 0]
   end
 end
 

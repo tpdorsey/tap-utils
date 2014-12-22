@@ -7,36 +7,41 @@ require 'date'
 require 'optparse'
 
 # Lookup table for float grade to letter grade
-# Involves some guesswork but I think it's pretty close
+# Return array includes:
+# - Letter grade
+# - Index
+# - 0 to 5 scale raw
+# - 0 to 5 stars scale rounded to .5
+# - 0 to 100 integer scale
 def gradeLookup(grade)
   if grade <= 0
-    return ["Not graded", 0]
+    return ["Not graded", -1]
   elsif grade >= 3.8
-    return ["A+", 13]
+    return ["A+", 12, 5.00, 5.0, 100]
   elsif grade >= 3.47
-    return ["A",  12]
+    return ["A", 11,  4.58, 4.5, 92]
   elsif grade >= 3.14
-    return ["A-", 11]
+    return ["A-", 10, 4.17, 4.0, 83]
   elsif grade >= 2.81
-    return ["B+", 10]
+    return ["B+", 9, 3.75, 4.0, 75]
   elsif grade >= 2.48
-    return ["B",  9]
+    return ["B", 8, 3.33, 3.5, 67]
   elsif grade >= 2.15
-    return ["B-", 8]
+    return ["B-", 7, 2.92, 3.0, 58]
   elsif grade >= 1.82
-    return ["C+", 7]
+    return ["C+", 6, 2.50, 2.5, 50]
   elsif grade >= 1.49
-    return ["C",  6]
+    return ["C", 5, 2.08, 2.0, 42]
   elsif grade >= 1.16
-    return ["C-", 5]
+    return ["C-", 4, 1.67, 1.5, 33]
   elsif grade >= 0.83
-    return ["D+", 4]
+    return ["D+", 3, 1.25, 1.5, 25]
   elsif grade >= 0.50
-    return ["D",  3]
+    return ["D", 2, 0.83, 1.0, 17]
   elsif grade >= 0.17
-    return ["D-", 2]
+    return ["D-", 1, 0.42, 0.5, 8]
   else
-    return ["F",  1]
+    return ["F", 0, 0.00, 0.0, 0]
   end
 end
 
@@ -93,7 +98,7 @@ file_hash["tapcellarbeers"].each do |beer_record|
 
       grade_data = gradeLookup(grade)
 
-      beerGrades << [timestamp, grade_data[0], grade_data[1], beer_record["beername"]]
+      beerGrades << [timestamp, grade_data[0], grade_data[1], beer_record["beername"], grade_data[2], grade_data[3], grade_data[4]]
     end
 
   end
@@ -102,10 +107,10 @@ end
 beerGrades.sort! { |a, b| a[0] <=> b[0] }
 
 if options[:csv]
-  puts "Date, Grade, Value, Name, Keyword"
+  puts "Date, Grade, Raw, Stars, 100, Name, Keyword"
 
   beerGrades.each do |beer|
-    puts beer[0].strftime("%Y-%m-%d") + "," + beer[1] + "," + beer[2].to_s + "," + beer[3] + "," + options[:keyword]
+    puts beer[0].strftime("%Y-%m-%d") + "," + beer[1] + "," + beer[4].to_s + "," + beer[5].to_s + "," + beer[6].to_s + "," + beer[3] + "," + options[:keyword]
   end
 
   exit
@@ -116,7 +121,7 @@ puts "Grade timeline for styles containing: " + options[:keyword].split.map(&:ca
 puts ""
 puts "Date".ljust(12) + "Grade F" + "A+".rjust(12) + "  Name"
 beerGrades.each do |beer|
-  puts beer[0].strftime("%Y-%m-%d") + "  " + beer[1].ljust(4) + (' ' * beer[2]) + "*" + (' ' * (16 - beer[2])) + beer[3]
+  puts beer[0].strftime("%Y-%m-%d") + "  " + beer[1].ljust(5) + (' ' * beer[2]) + "*" + (' ' * (16 - beer[2])) + beer[3]
 end
 puts ""
 
