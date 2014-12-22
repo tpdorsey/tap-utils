@@ -161,6 +161,14 @@ If the style name or file name contains spaces or characters that require escapi
 
 ## Changelog
 
+### DAte
+
+tap-avg-grades.rb
+"raw, stars and 100 based grades"
+
+tap-timeline.rb
+"raw, stars and 100 based grades"
+
 ### 12/18/2014
 
 tap-avg-grades.rb
