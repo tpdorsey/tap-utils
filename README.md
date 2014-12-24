@@ -163,10 +163,7 @@ If the style name or file name contains spaces or characters that require escapi
 
 ## Changelog
 
-### DAte
-
-tap-avg-grades.rb
-*
+### 12/24/2014
 
 tap-timeline.rb
 * Added 0-4, 0-5, stars and 100-based grades to CSV output
