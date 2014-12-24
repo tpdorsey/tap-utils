@@ -151,6 +151,8 @@ Date        Grade F          A+  Name
 2014-11-25  A+               *   Aún Más Café Jesús
 2014-12-05  A+               *   Bourbon County Brand Stout
 2014-12-10  A               *    Ten Fidy
+
+Mean Grade: A-             *
 ```
 
 For example, the following returns all IPAs, including double and imperial variants.
@@ -164,7 +166,7 @@ If the style name or file name contains spaces or characters that require escapi
 ### DAte
 
 tap-avg-grades.rb
-* Added 0-4, 0-5, stars and 100-based grades to CSV output
+*
 
 tap-timeline.rb
 * Added 0-4, 0-5, stars and 100-based grades to CSV output
