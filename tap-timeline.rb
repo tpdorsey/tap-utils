@@ -12,36 +12,37 @@ require 'optparse'
 # - Index
 # - 0 to 5 scale raw
 # - 0 to 5 stars scale rounded to .5
-# - 0 to 100 integer scale
+# - 60 to 100 scale similar to BeerAdvocate
+# - 0 to 4 scale
 def gradeLookup(grade)
   if grade <= 0
     return ["Not graded", -1]
   elsif grade >= 3.8
-    return ["A+", 12, 5.00, 5.0, 100]
+    return ["A+", 12, 5.00, 5.0, 100, 4.0]
   elsif grade >= 3.47
-    return ["A", 11,  4.58, 4.5, 92]
+    return ["A", 11,  4.58, 4.5, 97, 3.67]
   elsif grade >= 3.14
-    return ["A-", 10, 4.17, 4.0, 83]
+    return ["A-", 10, 4.17, 4.0, 93, 3.33]
   elsif grade >= 2.81
-    return ["B+", 9, 3.75, 4.0, 75]
+    return ["B+", 9, 3.75, 4.0, 90, 3.0]
   elsif grade >= 2.48
-    return ["B", 8, 3.33, 3.5, 67]
+    return ["B", 8, 3.33, 3.5, 87, 2.67]
   elsif grade >= 2.15
-    return ["B-", 7, 2.92, 3.0, 58]
+    return ["B-", 7, 2.92, 3.0, 83, 2.33]
   elsif grade >= 1.82
-    return ["C+", 6, 2.50, 2.5, 50]
+    return ["C+", 6, 2.50, 2.5, 80, 2.0]
   elsif grade >= 1.49
-    return ["C", 5, 2.08, 2.0, 42]
+    return ["C", 5, 2.08, 2.0, 77, 1.67]
   elsif grade >= 1.16
-    return ["C-", 4, 1.67, 1.5, 33]
+    return ["C-", 4, 1.67, 1.5, 73, 1.33]
   elsif grade >= 0.83
-    return ["D+", 3, 1.25, 1.5, 25]
+    return ["D+", 3, 1.25, 1.5, 70, 1.0]
   elsif grade >= 0.50
-    return ["D", 2, 0.83, 1.0, 17]
+    return ["D", 2, 0.83, 1.0, 67, 0.67]
   elsif grade >= 0.17
-    return ["D-", 1, 0.42, 0.5, 8]
+    return ["D-", 1, 0.42, 0.5, 63, 0.33]
   else
-    return ["F", 0, 0.00, 0.0, 0]
+    return ["F", 0, 0.00, 0.0, 60, 0.0]
   end
 end
 
@@ -98,7 +99,7 @@ file_hash["tapcellarbeers"].each do |beer_record|
 
       grade_data = gradeLookup(grade)
 
-      beerGrades << [timestamp, grade_data[0], grade_data[1], beer_record["beername"], grade_data[2], grade_data[3], grade_data[4]]
+      beerGrades << [timestamp, grade_data[0], grade_data[1], beer_record["beername"], grade_data[2], grade_data[3], grade_data[4], grade_data[5]]
     end
 
   end
@@ -107,10 +108,10 @@ end
 beerGrades.sort! { |a, b| a[0] <=> b[0] }
 
 if options[:csv]
-  puts "Date, Grade, Raw, Stars, 100, Name, Keyword"
+  puts "Date, Grade, 0-4, 0-5, Stars, 100, Name"
 
   beerGrades.each do |beer|
-    puts beer[0].strftime("%Y-%m-%d") + "," + beer[1] + "," + beer[4].to_s + "," + beer[5].to_s + "," + beer[6].to_s + "," + beer[3] + "," + options[:keyword]
+    puts beer[0].strftime("%Y-%m-%d") + "," + beer[1] + "," + beer[7].to_s + "," + beer[4].to_s + "," + beer[5].to_s + "," + beer[6].to_s + "," + beer[3]
   end
 
   exit
@@ -121,7 +122,7 @@ puts "Grade timeline for styles containing: " + options[:keyword].split.map(&:ca
 puts ""
 puts "Date".ljust(12) + "Grade F" + "A+".rjust(12) + "  Name"
 beerGrades.each do |beer|
-  puts beer[0].strftime("%Y-%m-%d") + "  " + beer[1].ljust(5) + (' ' * beer[2]) + "*" + (' ' * (16 - beer[2])) + beer[3]
+  puts beer[0].strftime("%Y-%m-%d") + "  " + beer[1].ljust(5) + (' ' * beer[2]) + "*" + (' ' * (15 - beer[2])) + beer[3]
 end
 puts ""
 

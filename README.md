@@ -164,23 +164,24 @@ If the style name or file name contains spaces or characters that require escapi
 ### DAte
 
 tap-avg-grades.rb
-"raw, stars and 100 based grades"
+* Added 0-4, 0-5, stars and 100-based grades
 
 tap-timeline.rb
-"raw, stars and 100 based grades"
+* Added 0-4, 0-5, stars and 100-based grades
+* Fixed output justification
 
 ### 12/18/2014
 
 tap-avg-grades.rb
-"fixed letter grade conversion"
-"csv output option"
+* Fixed letter grade conversion
+* CSV output option
 
 tap-styles.rb
-"simplify reading json" with error handling
-"added option handling"
-"csv output option"
+* Simplify reading JSON with error handling
+* Added option handling
+* CSV output option
 
 tap-timeline.rb
-"fixed letter grade conversion"
-"added beer name to output"
-"csv output option"
+* Fixed letter grade conversion
+* Added beer name to output
+* CSV output option
