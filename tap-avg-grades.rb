@@ -9,36 +9,37 @@ ARGV << '-h' if ARGV.empty?
 # - Index
 # - 0 to 5 scale raw
 # - 0 to 5 stars scale rounded to .5
-# - 0 to 100 integer scale
+# - 60 to 100 scale similar to BeerAdvocate
+# - 0 to 4 scale
 def gradeLookup(grade)
   if grade <= 0
     return ["Not graded", -1]
   elsif grade >= 3.8
-    return ["A+", 13, 5.00, 5.0, 100]
+    return ["A+", 12, 5.00, 5.0, 100, 4.0]
   elsif grade >= 3.47
-    return ["A", 12,  4.58, 4.5, 92]
+    return ["A", 11,  4.58, 4.5, 97, 3.67]
   elsif grade >= 3.14
-    return ["A-", 11, 4.17, 4.0, 83]
+    return ["A-", 10, 4.17, 4.0, 93, 3.33]
   elsif grade >= 2.81
-    return ["B+", 10, 3.75, 4.0, 75]
+    return ["B+", 9, 3.75, 4.0, 90, 3.0]
   elsif grade >= 2.48
-    return ["B", 9, 3.33, 3.5, 67]
+    return ["B", 8, 3.33, 3.5, 87, 2.67]
   elsif grade >= 2.15
-    return ["B-", 8, 2.92, 3.0, 58]
+    return ["B-", 7, 2.92, 3.0, 83, 2.33]
   elsif grade >= 1.82
-    return ["C+", 7, 2.50, 2.5, 50]
+    return ["C+", 6, 2.50, 2.5, 80, 2.0]
   elsif grade >= 1.49
-    return ["C", 6, 2.08, 2.0, 42]
+    return ["C", 5, 2.08, 2.0, 77, 1.67]
   elsif grade >= 1.16
-    return ["C-", 5, 1.67, 1.5, 33]
+    return ["C-", 4, 1.67, 1.5, 73, 1.33]
   elsif grade >= 0.83
-    return ["D+", 4, 1.25, 1.5, 25]
+    return ["D+", 3, 1.25, 1.5, 70, 1.0]
   elsif grade >= 0.50
-    return ["D", 3, 0.83, 1.0, 17]
+    return ["D", 2, 0.83, 1.0, 67, 0.67]
   elsif grade >= 0.17
-    return ["D-", 2, 0.42, 0.5, 8]
+    return ["D-", 1, 0.42, 0.5, 63, 0.33]
   else
-    return ["F", 1, 0.00, 0.0, 0]
+    return ["F", 0, 0.00, 0.0, 60, 0.0]
   end
 end
 
@@ -156,7 +157,7 @@ uniqueBeerStyles.each do |style|
   if options[:csv]
     puts style + "," + letter_grade[0] + "," + letter_grade[1].to_s + "," + beerGrades.length.to_s + "," + std_dev.to_s
   else
-    puts style.rjust(width) + "  " + letter_grade.ljust(11) + beerGrades.length.to_s.ljust(7) + std_dev.to_s
+    puts style.rjust(width) + "  " + letter_grade[0].ljust(11) + beerGrades.length.to_s.ljust(7) + std_dev.to_s
   end
 
   beerGrades.clear

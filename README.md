@@ -164,10 +164,11 @@ If the style name or file name contains spaces or characters that require escapi
 ### DAte
 
 tap-avg-grades.rb
-* Added 0-4, 0-5, stars and 100-based grades
+* Added 0-4, 0-5, stars and 100-based grades to CSV output
 
 tap-timeline.rb
-* Added 0-4, 0-5, stars and 100-based grades
+* Added 0-4, 0-5, stars and 100-based grades to CSV output
+* Added mean grade to standard output
 * Fixed output justification
 
 ### 12/18/2014

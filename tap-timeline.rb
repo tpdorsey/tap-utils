@@ -50,6 +50,15 @@ def parse_timestamp(date)
   return DateTime.strptime(date, "%Y-%m-%d %H:%M:%S %Z")
 end
 
+# Math stuff for avg grade
+def sum(a)
+  a.inject(0){ |accum, i| accum + i }
+end
+
+def mean(a)
+  sum(a) / a.length.to_f
+end
+
 ARGV << '-h' if ARGV.length < 2
 
 options = {}
@@ -117,13 +126,21 @@ if options[:csv]
   exit
 end
 
+grades_array = Array.new
+
 puts ""
 puts "Grade timeline for styles containing: " + options[:keyword].split.map(&:capitalize).join(' ')
 puts ""
 puts "Date".ljust(12) + "Grade F" + "A+".rjust(12) + "  Name"
 beerGrades.each do |beer|
   puts beer[0].strftime("%Y-%m-%d") + "  " + beer[1].ljust(5) + (' ' * beer[2]) + "*" + (' ' * (15 - beer[2])) + beer[3]
+
+  grades_array << beer[7]
 end
 puts ""
 
+# Process raw grades to get avg score and letter grade for avg score
+avg_grade = mean(grades_array)
+letter_grade = gradeLookup(avg_grade)
 
+puts "Mean Grade: " + letter_grade[0].ljust(5) + (' ' * letter_grade[1]) + "*"
