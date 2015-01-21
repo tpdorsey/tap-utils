@@ -63,10 +63,25 @@ ARGV << '-h' if ARGV.length < 2
 
 options = {}
 OptionParser.new do |opts|
-  opts.banner = "Returns a timeline of grades for a given style in a TapCellar backup.\nUsage: tap-timeline.rb [options] [style_keyword] [file to parse]"
+  opts.banner = "Returns a timeline of grades for a given keyword in a TapCellar backup.\n"\
+                "Default filter (no options) is on style.\n"\
+                "Usage: tap-timeline.rb [options] [style_keyword] [file to parse]"
   options[:csv] = false
   options[:filename] = ""
   options[:keyword] = ""
+  options[:filter] = "style"
+
+  opts.on("-s", "--style", "Filter on style") do
+    options[:filter] = "style"
+  end
+
+  opts.on("-b", "--brewery", "Filter on brewery") do
+    options[:filter] = "breweryname"
+  end
+
+  opts.on("-n", "--name", "Filter on name") do
+    options[:filter] = "beername"
+  end
 
   opts.on("-c", "--csv", "Output CSV") do
     options[:csv] = true
@@ -98,7 +113,7 @@ file_hash["tapcellarbeers"].each do |beer_record|
   grade = beer_record["grade"].to_f.round(3)
   if grade > 0
 
-    if beer_record["bdb_style"].to_s.downcase.include? options[:keyword] or beer_record["style"].to_s.downcase.include? options[:keyword]
+    if beer_record[options[:filter]].to_s.downcase.include? options[:keyword]
 
       if beer_record.has_key?("tastings")
         timestamp = parse_timestamp(beer_record["tastings"][0]["timestamp"])
@@ -129,7 +144,7 @@ end
 grades_array = Array.new
 
 puts ""
-puts "Grade timeline for styles containing: " + options[:keyword].split.map(&:capitalize).join(' ')
+puts "Grade timeline for " + options[:filter] + " containing: " + options[:keyword].split.map(&:capitalize).join(' ')
 puts ""
 puts "Date".ljust(12) + "Grade F" + "A+".rjust(12) + "  Name"
 beerGrades.each do |beer|

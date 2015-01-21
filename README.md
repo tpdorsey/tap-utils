@@ -133,7 +133,15 @@ The script expects the second to last argument is the keyword string and the las
 
 ```ruby tap-shopping.rb [options] [keyword] [filename]```
 
-Optionally pass in the **-c** or **--csv** flag as an option to return data in CSV format.
+Takes the following options:
+
+| Option | Description |
+| ------ | ----------- |
+| -b, --brewery |  Filter on brewery |
+| -n, --name    |  Filter on name |
+| -s, --style   |  Filter on style (default) |
+| -c, --csv     |  Output CSV |
+| -h, --help    |  Display help for options |
 
 ```
 Grade timeline for styles containing: Stout
@@ -159,9 +167,18 @@ For example, the following returns all IPAs, including double and imperial varia
 
 ```ruby tap-timeline.rb "india pale ale" TapCellarBackup.json```
 
-If the style name or file name contains spaces or characters that require escaping, use quotes around the string. Which is a good idea in any case.
+This example returns all Evil Twin beers.
+
+```ruby tap-timeline.rb -b "evil twin" TapCellarBackup.json```
+
+If the filter keyword or file name contains spaces or characters that require escaping, use quotes around the string. Which is a good idea in any case.
 
 ## Changelog
+
+### 01/20/2015
+
+tap-timeline.rb
+* Added options to filter on brewery or beer name
 
 ### 12/24/2014
 
