@@ -318,7 +318,7 @@ Translating `grade` property values back to letter grades is straightforward.
 
 | Value Range | Grade |
 | --- | --- |
-| > 3.8 | A+ |
+| 3.80 - 4.00 | A+ |
 | 3.47 - 3.79 | A |
 | 3.14 - 3.46 | A- |
 | 2.81 - 3.13 | B+ |
