@@ -198,7 +198,7 @@ TapCellarBackup.json will always provide these two base properties.
 
 Note that `beercount` represents only the number of objects returned, not the total number of _valid_ beer records. When parsing beer records you should test against the `tapcellarbeers.grade` property for valid records. Details provided below.
 
-Example:
+The data returned has the following structure:
 
     {
       "beercount": "349",
@@ -207,7 +207,7 @@ Example:
 
 ### tapcellarbeers
 
-Each object in the `tapcellarbeers` collection represents an individual beer. The data in these records may have been provided by TapCellar's sync function with BreweryDB or by manually adding a record via the "Add a Beer" command within the app.
+Each object in the `tapcellarbeers` collection represents an individual beer. The data in these records may have been provided by TapCellar's sync function with BreweryDB, by the user editing an existing beer record, or by manually adding a record via the "Add a Beer" command within the app.
 
 Each object may contain some or all of the following properties.
 
