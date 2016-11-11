@@ -20,6 +20,12 @@ While you're changing the extension, I suggest changing the name of the file so 
 
 Now you can open the zip archive. The following utilities read their data from the TapCellarBackup.json file. Note the path to this file and pass it as the last argument when you run these Ruby scripts.
 
+## tap-archive.rb
+
+New utility under development to transform TapCellarBackup.json data to CSV for export into other data stores.
+
+Details TK.
+
 ## tap-avg-grades.rb
 
 Returns a table of styles for all graded beers, including:
@@ -173,7 +179,98 @@ This example returns all Evil Twin beers.
 
 If the filter keyword or file name contains spaces or characters that require escaping, use quotes around the string. Which is a good idea in any case.
 
+## TapCellar Backup Data Reference
+
+This section defines the data exported in a TapCellar backup.
+
+### TapCellarBackup.json Properties
+
+`TapCellarBackup.json` contains all of the data for your beer and tasting records.
+
+All values are returned as strings.
+
+Base properties in the file are:
+
+| Property | Description |
+| --- | --- |
+| beercount | The number of objects in the `tapcellarbeers` collection. |
+| tapcellarbeers | Collection of objects representing beers. |
+
+`TapCellarBackup.json` will always provide these two base properties.
+
+Example:
+
+    {
+      "beercount": "349",
+      "tapcellarbeers": [...]
+    }
+
+### tapcellarbeers
+
+Each object in the `tapcellarbeers` collection represents and individual beer. The data in these records may have been provided by TapCellar's sync function with BreweryDB or by manually adding a record via the "Add a Beer" command within the app.
+
+| Property | Description |
+| --- | --- |
+| abv | Description |
+| bdb_abv | Description |
+| bdb_beeradvocatelink | Description |
+| bdb_beercolor | Description |
+| bdb_beerdescription | Description |
+| bdb_beeribu | Description |
+| bdb_beerid | Description |
+| bdb_beerimageurl | Description |
+| bdb_beername | Description |
+| bdb_breweryname | Description |
+| bdb_ratebeerlink | Description |
+| bdb_srm | Description |
+| bdb_style | Description |
+| bdb_styledescription | Description |
+| bdb_untappdlink | Description |
+| bdb_updatedate | Description |
+| bdbeditdate | Description |
+| beeradvocatelink | Description |
+| beerid | Description |
+| beername | Description |
+| bookmarked | Description |
+| breweryname | Description |
+| cellarcount | Description |
+| color | Description |
+| createddate | Description |
+| description | Description |
+| editdate | Description |
+| grade | Description |
+| ibu | Description |
+| photoname | Description |
+| ratebeerlink | Description |
+| shoppingcart | Description |
+| sortindex | Description |
+| srm | Description |
+| style | Description |
+| syncdate | Description |
+| tastings | Description |
+| untappdlink | Description |
+| vintage | Description |
+
+### tapcellarbeers.tastings
+
+| Property | Description |
+| --- | --- |
+| comment | Description |
+| geo | Description |
+| photofilename | Description |
+| tastingid | Description |
+| timestamp | Description |
+
 ## Changelog
+
+### 11/11/2016
+
+tap-archive.rb
+* Adding new utility. Not functional at this time.
+
+README.md
+* Adding tap-archive.rb information
+* Adding TapCellar backup information
 
 ### 01/20/2015
 
