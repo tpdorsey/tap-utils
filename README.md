@@ -240,7 +240,7 @@ Each object may contain some or all of the following properties.
 | createddate | Timestamp indicating when the beer record was originally created. |
 | description | Description of the beer. |
 | editdate | Timestamp indicating the last time any change was made to the beer record by the user. Does not reflect `bdb_updatedate` changes. |
-| grade | Most recent user grade represented as a float. See [Grade Values](#gradevalues) for further explanation of these values and how they can be translated to letter grades. |
+| grade | Most recent user grade represented as a float. See [Grade Values](#grade-values) for further explanation of these values and how they can be translated to letter grades. |
 | ibu | IBU of the beer. |
 | photoname | File name of the beer label image. For example, "BeerLabel Nov 9, 2014, 700 PM.png". If your backup included photos these image files are in the same folder as TapCellarBackup.json. |
 | ratebeerlink | URL of the RateBeer web page for the beer. |
